@@ -9,9 +9,7 @@ pipeline {
         }
         stage('Taking Actions') {
             steps {
-                echo params.Action
-                echo 'ing '
-                echo params.OS
+                echo params.Action+'ing '+params.OS
             }
         }
     }
