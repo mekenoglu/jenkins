@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    parameters { 
+        choice(name: 'OS', choices: ['Windows', 'Linux'], description: 'Please select an OS') 
+        choice(name: 'ACTION', choices: ['Reboot','Shutdown'], description: 'Please select an action to do')
+        }
+
     stages {
         stage('Initialize') {
             steps {
