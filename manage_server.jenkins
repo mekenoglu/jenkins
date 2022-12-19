@@ -1,0 +1,18 @@
+pipeline {
+    agent agent {label 'master'}
+
+    stages {
+        stage('Initialize') {
+            steps {
+                echo 'initializing pipeline...'
+            }
+        }
+        stage('Taking Actions') {
+            steps {
+                echo params.Action
+                echo 'ing '
+                echo params.OS
+            }
+        }
+    }
+}
