@@ -10,7 +10,7 @@ pipeline {
         stage('Taking Actions') {
             steps {
                 print "${params.Action}ing ${params.OS}"
-                //echo '${params.Action}ing ${params.OS}'
+                echo "${params.Action}ing ${params.OS}"
             }
         }
     }
