@@ -5,13 +5,14 @@ pipeline {
         choice(name: 'OS', choices: ['Windows', 'Linux'], description: 'Please select an OS') 
         string(name:"IP", description:"The Server Ip")
         choice(name: 'Action', choices: ['Reboot','Shutdown'], description: 'Please select an action to do')
-        booleanParam(name: 'Refresh-Pipeline', description:'Refresh pipeline code')
+        booleanParam(name: 'Refresh_Pipeline', description:'Refresh pipeline code')
     }
 
     stages {
         stage('Refresh Pipeline') {
-            when { expression { params.Refresh-Pipeline == True }}
+            when { expression { params.Refresh_Pipeline == True }}
             steps {
+                currentBuild.result = 'ABORTED'
                 error("refreshing pipeline...")
             }
         }
