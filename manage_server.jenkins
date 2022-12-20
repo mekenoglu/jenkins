@@ -3,6 +3,7 @@ pipeline {
 
     parameters { 
         choice(name: 'OS', choices: ['Windows', 'Linux'], description: 'Please select an OS') 
+        string(name:"IP", description:"The Server Ip")
         choice(name: 'Action', choices: ['Reboot','Shutdown'], description: 'Please select an action to do')
         }
 
@@ -14,8 +15,9 @@ pipeline {
         }
         stage('Taking Actions') {
             steps {
-                print "${params.Action}ing ${params.OS}"
-                echo "${params.Action}ing ${params.OS}"
+                script{
+                    println("The machine with IP: ${params.IP} with OS: ${params.OS}  ")
+                }
             }
         }
     }
