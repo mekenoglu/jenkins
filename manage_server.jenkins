@@ -12,8 +12,10 @@ pipeline {
         stage('Refresh Pipeline') {
             when { expression { params.Refresh_Pipeline == True }}
             steps {
-                currentBuild.result = 'ABORTED'
-                error("refreshing pipeline...")
+                script{
+                    currentBuild.result = 'ABORTED'
+                    error("refreshing pipeline...")
+                }
             }
         }
         stage('Initialize') {
