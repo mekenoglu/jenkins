@@ -10,7 +10,7 @@ pipeline {
 
     stages {
         stage('Refresh Pipeline') {
-            when { params.Refresh-Pipeline == True }
+            
             steps {
                 error("refreshing pipeline...")
             }
