@@ -5,9 +5,16 @@ pipeline {
         choice(name: 'OS', choices: ['Windows', 'Linux'], description: 'Please select an OS') 
         string(name:"IP", description:"The Server Ip")
         choice(name: 'Action', choices: ['Reboot','Shutdown'], description: 'Please select an action to do')
-        }
+        booleanParam(name: 'Refresh-Pipeline', description:'Refresh pipeline code')
+    }
 
     stages {
+        stage('Refresh Pipeline') {
+            when { params.Refresh-Pipeline == True }
+            steps {
+                error("refreshing pipeline...")
+            }
+        }
         stage('Initialize') {
             steps {
                 echo 'initializing pipeline...'
