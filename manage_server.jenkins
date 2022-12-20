@@ -10,7 +10,7 @@ pipeline {
 
     stages {
         stage('Refresh Pipeline') {
-            when { expression { params.Refresh_Pipeline == True }}
+            when { expression { params.Refresh_Pipeline == true }}
             steps {
                 script{
                     currentBuild.result = 'ABORTED'
