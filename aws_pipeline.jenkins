@@ -1,0 +1,51 @@
+def instance_id
+
+pipeline {
+    agent any
+    
+
+    stages {
+        stage('Hello') {
+            steps {
+                script{   
+                    sh 'echo $PATH '
+                    withAWS(credentials:'aws-key') {
+                        //sh 'aws iam get-user'
+                        //sh 'aws ec2 describe-regions --region eu-central-1'                 
+                        def instance_details = sh (
+                        script: 
+                            """
+                            aws ec2 run-instances \
+                            --image-id ami-06c39ed6b42908a36 \
+                            --instance-type t2.micro \
+                            --key-name AWS_learning \
+                            --region eu-central-1
+                        """,
+                        returnStdout: true
+                    ).trim()
+                    def template = readFile(file : 'Configs/AWStemplates.json')
+
+                    def json = readJSON text: template 
+                    instance_id = json ["Instances"][0]["InstanceId"]
+                    
+                    }
+                }
+            }
+        }
+        
+        stage('Goodbye'){
+            steps {
+                script{   
+                    sh 'echo $PATH '
+                    withAWS(credentials:'aws-key') {
+                        sh """
+                            aws ec2 terminate-instances \
+                            --region eu-central-1 \
+                            --instance-ids ${instance_id}
+                        """
+                    }
+                }
+            }
+        }
+    }
+}
