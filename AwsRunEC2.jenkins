@@ -52,7 +52,8 @@ pipeline {
                         """,
                         returnStdout: true
                     ).trim()
-
+                    def json = readJSON text: instance_details
+                    instance_id = json ["Instances"][0]["InstanceId"]
                     }
                 }
             }
@@ -66,10 +67,10 @@ pipeline {
                         sh """
                             aws ec2 terminate-instances \
                             --region eu-central-1 \
-                            --instance-ids ${ami_id}
+                            --instance-ids ${instance_id}
                         """
                     }
-                    echo "Instance with id: ${ami_id} is terminated"
+                    echo "Instance with id: ${instance_id} is terminated"
                 }
             }
         }
