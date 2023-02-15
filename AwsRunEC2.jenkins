@@ -25,6 +25,7 @@ pipeline {
                     echo "${params.iSize}"
                     echo "$params.OS+'-'+$params.iSize"
                     def instance_type = [params.OS,params.iSize].join('-')
+                    echo "instance_type"
                     //println("The machine ${instance_type} is initializing..")
                     // echo "[${params.OS},${params.iSize}].join('-') joint"
                 }
