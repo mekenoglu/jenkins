@@ -1,0 +1,24 @@
+{
+  "ec2": {
+    "linux-small": {
+      "ami": {
+        "id": "ami-06c39ed6b42908a3"
+      }
+    },
+    "linux-big": {
+      "ami": {
+        "id": "ami-06c39ed6b42908a3"
+      }
+    },
+    "windows-small": {
+      "ami": {
+        "id": "ami-06c39ed6b42908a3"
+      }
+    },
+    "windows-big": {
+      "ami": {
+        "id": "ami-06c39ed6b42908a3"
+      }
+    }
+  }
+}
