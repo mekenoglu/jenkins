@@ -36,7 +36,7 @@ pipeline {
                     sh 'echo $PATH '
                     def templates = readFile(file : 'Configs/AWStemplates.json')
                     def json_templates = readJSON text: templates 
-                    ami_id = json ["ec2"]["$instance_type"]["ami"]["id"]
+                    ami_id = json_templates ["ec2"]["$instance_type"]["ami"]["id"]
                     echo "$ami_id"
                     withAWS(credentials:'aws-key') {
                         //sh 'aws iam get-user'
@@ -53,7 +53,7 @@ pipeline {
                         returnStdout: true
                     ).trim()
                     def json_instance = readJSON text: instance_details
-                    instance_id = json ["Instances"][0]["InstanceId"]
+                    instance_id = json_instance ["Instances"][0]["InstanceId"]
                     }
                 }
             }
