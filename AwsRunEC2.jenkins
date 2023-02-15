@@ -21,7 +21,7 @@ pipeline {
             steps {
                 echo 'initializing pipeline...'
                 // script{
-                    instance_type = [params.OS,params.iSize].join('-')
+                    instance_type = [${params.OS},${params.iSize}].join('-')
                     println("The machine ${instance_type} is initializing..")
                     echo "[${params.OS},${params.iSize}].join('-') joint"
                 //    }
