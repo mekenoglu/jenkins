@@ -1,3 +1,5 @@
+def instance_type
+
 pipeline {
     agent any
 
@@ -23,7 +25,7 @@ pipeline {
                 script{
                     echo "os: $params.OS"
                     echo "size: ${params.iSize}"
-                    def instance_type = [params.OS,params.iSize].join('-')
+                    instance_type = [params.OS,params.iSize].join('-')
                     echo "$instance_type"
                 }
             }
