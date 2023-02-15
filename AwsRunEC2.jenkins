@@ -61,6 +61,7 @@ pipeline {
                         aws ec2 create-tags \
                         --resources ${instance_id} \
                         --tags Key=Name,Value=${Instance_Name} Key=ami,Value=${ami_id}
+                        --region eu-central-1
                         """
                         )
                     }
