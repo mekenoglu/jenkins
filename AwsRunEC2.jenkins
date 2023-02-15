@@ -8,6 +8,7 @@ pipeline {
         choice(name: 'iSize', choices: ['small','big'], description: 'Please select an instance size')
         booleanParam(name: 'Refresh_Pipeline', description:'Refresh pipeline code')
         booleanParam(name: 'Terminate_Instance', description:'Terminate machine after creating')
+        string(name:'Instance_Name', description: 'Please enter machine name')
     }
 
     stages {
@@ -55,6 +56,13 @@ pipeline {
                     ).trim()
                     def json_instance = readJSON text: instance_details
                     instance_id = json_instance ["Instances"][0]["InstanceId"]
+                        sh(
+                        """
+                        aws ec2 create-tags \
+                        --resources ${instance_id} \
+                        --tags Key=Name,Value=${Instance_Name} Key=ami,Value=${ami_id}
+                        """
+                        )
                     }
                 }
             }
