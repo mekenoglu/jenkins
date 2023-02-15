@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     parameters { 
-        choice(name: 'OS', choices: ['windows', 'linux'], description: 'Please select an OS for the instance to be created', defaultValue: 'linux') 
-        choice(name: 'iSize', choices: ['small','big'], description: 'Please select an instance size', defaultValue: 'big')
+        choice(name: 'OS', choices: ['windows', 'linux'], description: 'Please select an OS for the instance to be created') 
+        choice(name: 'iSize', choices: ['small','big'], description: 'Please select an instance size')
         booleanParam(name: 'Refresh_Pipeline', description:'Refresh pipeline code')
     }
 
