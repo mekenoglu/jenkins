@@ -1,0 +1,79 @@
+def instance_type
+def instance_id
+pipeline {
+    agent any
+
+    parameters { 
+        choice(name: 'OS', choices: ['windows', 'linux'], description: 'Please select an OS for the instance to be created') 
+        choice(name: 'iSize', choices: ['small','big'], description: 'Please select an instance size')
+        booleanParam(name: 'Refresh_Pipeline', description:'Refresh pipeline code')
+    }
+
+    stages {
+        stage('Refresh Pipeline') {
+            when { expression { params.Refresh_Pipeline == true }}
+            steps {
+                script{
+                    currentBuild.result = 'ABORTED'
+                    error("refreshing pipeline...")
+                }
+            }
+        }
+        stage('Initialize') {
+            steps {
+                echo 'initializing pipeline...'
+                script{
+                    echo "os: $params.OS"
+                    echo "size: ${params.iSize}"
+                    instance_type = [params.OS,params.iSize].join('-')
+                    echo "$instance_type"
+                }
+            }
+        }
+        stage('Taking Actions') {
+            steps {
+                script{
+                    sh 'echo $PATH '
+                    def templates = readFile(file : 'Configs/AWStemplates.json')
+                    def json_templates = readJSON text: templates 
+                    ami_id = json_templates ["ec2"]["$instance_type"]["ami"]["id"]
+                    echo "$ami_id"
+                    withAWS(credentials:'aws-key') {
+                        //sh 'aws iam get-user'
+                        //sh 'aws ec2 describe-regions --region eu-central-1'                 
+                        def instance_details = sh (
+                        script: 
+                            """
+                            aws ec2 run-instances \
+                            --image-id ${ami_id} \
+                            --instance-type t2.micro \
+                            --key-name AWS_learning \
+                            --region eu-central-1
+                        """,
+                        returnStdout: true
+                    ).trim()
+                    def json_instance = readJSON text: instance_details
+                    instance_id = json_instance ["Instances"][0]["InstanceId"]
+                    }
+                }
+            }
+        }
+
+        stage('Terminate created machine') {
+            steps {
+                script{
+                    sh 'echo $PATH '
+                    withAWS(credentials:'aws-key') {
+                        sh """
+                            aws ec2 terminate-instances \
+                            --region eu-central-1 \
+                            --instance-ids ${instance_id}
+                        """
+                    }
+                    echo "Instance with id: ${instance_id} is terminated"
+                }
+            }
+        }
+        
+    }
+}
