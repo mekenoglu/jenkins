@@ -20,9 +20,10 @@ pipeline {
         stage('Initialize') {
             steps {
                 echo 'initializing pipeline...'
-                instance_type = ${parameters.OS}
-                println("The machine ${instance_type} is initializing..")
-                
+                script{
+                    instance_type = ${params.OS}
+                    println("The machine ${instance_type} is initializing..")
+                }
             }
         }
         stage('Taking Actions') {
