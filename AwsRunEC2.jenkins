@@ -17,15 +17,15 @@ pipeline {
                 }
             }
         }
-        // stage('Initialize') {
-        //     steps {
-        //         echo 'initializing pipeline...'
-        //         script{
-        //             instance_type = [${params.OS},${params.iSize}].join('-')
-        //             println("The machine ${instance_type} is initializing..")
-        //            }
-        //     }
-        // }
+        stage('Initialize') {
+            steps {
+                echo 'initializing pipeline...'
+                script{
+                    instance_type = [${params.OS},${params.iSize}].join('-')
+                    println("The machine ${instance_type} is initializing..")
+                   }
+            }
+        }
         // stage('Taking Actions') {
         //     steps {
         //         script{
