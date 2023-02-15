@@ -7,7 +7,7 @@
     },
     "linux-big": {
       "ami": {
-        "id": "ami-06c39ed6b42908a3"
+        "id": "ami-06c39ed6b42908a36"
       }
     },
     "windows-small": {
