@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     parameters { 
-        choice(name: 'OS', choices: ['windows', 'linux'], description: 'Please select an OS for the instance to be created') 
-        choice(name: 'iSize', choices: ['small','big'], description: 'Please select an instance size')
+        choice(name: 'OS', choices: ['windows', 'linux'], description: 'Please select an OS for the instance to be created', defaultValue: 'linux') 
+        choice(name: 'iSize', choices: ['small','big'], description: 'Please select an instance size', defaultValue: 'big')
         booleanParam(name: 'Refresh_Pipeline', description:'Refresh pipeline code')
     }
 
@@ -20,11 +20,11 @@ pipeline {
         stage('Initialize') {
             steps {
                 echo 'initializing pipeline...'
-                // script{
+                script{
                     //instance_type = [${params.OS},${params.iSize}].join('-')
                     //println("The machine ${instance_type} is initializing..")
                     echo "[${params.OS},${params.iSize}].join('-')"
-                //    }
+                   }
             }
         }
         // stage('Taking Actions') {
