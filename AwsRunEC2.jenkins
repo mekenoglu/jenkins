@@ -70,9 +70,9 @@ pipeline {
                         """
                     }
                     echo "Instance with id: ${ami_id} is terminated"
-                    }
                 }
             }
         }
+        
     }
 }
