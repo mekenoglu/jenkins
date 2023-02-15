@@ -35,7 +35,7 @@ pipeline {
                     def templates = readFile(file : 'Configs/AWStemplates.json')
                     def json = readJSON text: templates 
                     instance_id = json ["ec2"][instance_type]["ami"]["id"]
-                    echo "instance_id"
+                    echo "$instance_id"
                     // withAWS(credentials:'aws-key') {
                     //     //sh 'aws iam get-user'
                     //     //sh 'aws ec2 describe-regions --region eu-central-1'                 
