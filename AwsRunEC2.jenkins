@@ -38,20 +38,20 @@ pipeline {
                     def json = readJSON text: templates 
                     instance_id = json ["ec2"]["$instance_type"]["ami"]["id"]
                     echo "$instance_id"
-                    // withAWS(credentials:'aws-key') {
-                    //     //sh 'aws iam get-user'
-                    //     //sh 'aws ec2 describe-regions --region eu-central-1'                 
-                    //     def instance_details = sh (
-                    //     script: 
-                    //         """
-                    //         aws ec2 run-instances \
-                    //         --image-id ami-06c39ed6b42908a36 \
-                    //         --instance-type t2.micro \
-                    //         --key-name AWS_learning \
-                    //         --region eu-central-1
-                    //     """,
-                    //     returnStdout: true
-                    // ).trim()
+                    withAWS(credentials:'aws-key') {
+                        //sh 'aws iam get-user'
+                        //sh 'aws ec2 describe-regions --region eu-central-1'                 
+                        def instance_details = sh (
+                        script: 
+                            """
+                            aws ec2 run-instances \
+                            --image-id $instance_id \
+                            --instance-type t2.micro \
+                            --key-name AWS_learning \
+                            --region eu-central-1
+                        """,
+                        returnStdout: true
+                    ).trim()
 
 
                     // }
