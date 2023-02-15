@@ -45,7 +45,7 @@ pipeline {
                         script: 
                             """
                             aws ec2 run-instances \
-                            --image-id $instance_id \
+                            --image-id ${instance_id} \
                             --instance-type t2.micro \
                             --key-name AWS_learning \
                             --region eu-central-1
