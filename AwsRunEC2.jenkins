@@ -7,6 +7,7 @@ pipeline {
         choice(name: 'OS', choices: ['windows', 'linux'], description: 'Please select an OS for the instance to be created') 
         choice(name: 'iSize', choices: ['small','big'], description: 'Please select an instance size')
         booleanParam(name: 'Refresh_Pipeline', description:'Refresh pipeline code')
+        booleanParam(name: 'Terminate_Instance', description:'Terminate machine after creating')
     }
 
     stages {
@@ -58,8 +59,8 @@ pipeline {
                 }
             }
         }
-
         stage('Terminate created machine') {
+            when { expression { params.Terminate_Instance == true }}
             steps {
                 script{
                     sh 'echo $PATH '
@@ -74,6 +75,7 @@ pipeline {
                 }
             }
         }
+        
         
     }
 }
