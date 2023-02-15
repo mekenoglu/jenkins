@@ -57,5 +57,22 @@ pipeline {
                 }
             }
         }
+
+        stage('Terminate created machine') {
+            steps {
+                script{
+                    sh 'echo $PATH '
+                    withAWS(credentials:'aws-key') {
+                        sh """
+                            aws ec2 terminate-instances \
+                            --region eu-central-1 \
+                            --instance-ids ${instance_id}
+                        """
+                    }
+                    echo "Instance with id: ${instance_id} is terminated"
+                    }
+                }
+            }
+        }
     }
 }
